@@ -17,3 +17,7 @@ final BorderRadius kRadius30 = BorderRadius.circular(30);
 
 //networkImage
 const String netflixIcon ='https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/227_Netflix_logo-512.png';
+
+//Image for showing if image not loaded
+const kMainImage =
+    "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/pFlaoHTZeyNkG83vxsAJiGzfSsa.jpg";

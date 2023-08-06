@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/core/constans.dart';
+import 'package:netflix/domain/apiendpoint.dart';
+import 'package:netflix/infrastructure/base_client.dart';
 import 'package:netflix/presentation/new_and_hot/widgets/coming_soon.dart';
 import 'package:netflix/presentation/new_and_hot/widgets/everyones_watching.dart';
 import 'package:netflix/presentation/widgets/appbar_widget.dart';
-
 
 class NewHotScreen extends StatelessWidget {
   const NewHotScreen({super.key});
@@ -51,16 +52,57 @@ class NewHotScreen extends StatelessWidget {
   }
 
   Widget _buildComingSoon() {
-    return ListView.builder(itemBuilder: (BuildContext context,int index) 
-    {
-      return const ComingSoonWidget();
-    },
-    itemCount: 10,);
+    return FutureBuilder(
+        future: apicall(ApiEndPoints.upcoming),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            const Center(
+              child: Column(
+                children: [
+                  CircularProgressIndicator(
+                    color: Colors.blue,
+                  ),
+                  Text('Please wait'),
+                ],
+              ),
+            );
+          }
+
+          if (snapshot.data == null) {
+            return const Text('No data found');
+          }
+          return ListView.separated(
+            separatorBuilder: (context, index) => kHeight50,
+            itemBuilder: (BuildContext context, int index) {
+              return  ComingSoonWidget(movieInfo: snapshot.data.results[index]);
+            },
+            itemCount: snapshot.data.results.length,
+          );
+        });
   }
 
   Widget _buildEveryonesWatching() {
-    return ListView.builder(itemBuilder:(context, index) =>  const EveryonesWatching(),itemCount: 10, );
-   
+    return  FutureBuilder(
+        future: apicall(ApiEndPoints.moviepopular),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+             Center(
+              child: Column(
+                children: [
+                  CircularProgressIndicator(
+                    color: Colors.blue,
+                  ),
+                  Text('Please wait'),
+                ],
+              ),
+            );
+          }
+          if (snapshot.data == null) {
+            return const Text('No data found');
+          }
+          return ListView.builder(
+      itemBuilder: (context, index) =>  EveryonesWatching(movieInfo: snapshot.data.results[index]),
+     itemCount: snapshot.data.results.length,);
+});
   }
 }
-

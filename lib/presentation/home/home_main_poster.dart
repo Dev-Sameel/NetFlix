@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/core/constans.dart';
+import 'package:netflix/domain/apiendpoint.dart';
+import 'package:netflix/infrastructure/api.dart';
+import 'package:netflix/infrastructure/base_client.dart';
+import 'package:netflix/model/movie_info.dart';
 import 'package:netflix/presentation/widgets/icon_with_label.dart';
 
-class HomeMainPoster extends StatelessWidget {
+class HomeMainPoster extends StatefulWidget {
   // final IconData icon;
   // final String title;
   const HomeMainPoster({
@@ -13,15 +17,40 @@ class HomeMainPoster extends StatelessWidget {
   });
 
   @override
+  State<HomeMainPoster> createState() => _HomeMainPosterState();
+}
+
+class _HomeMainPosterState extends State<HomeMainPoster> {
+
+  @override
+  initState() {
+    super.initState();
+    setImage();
+  }
+
+  setImage() async {
+    dynamic result = await apicall(ApiEndPoints.moviepopular);
+
+    setState(() {
+      if (result.results.isNotEmpty) {
+        MovieInfoModel movieInfo = result.results[0];
+        imageUrl =
+            "https://image.tmdb.org/t/p/w500${movieInfo.posterPath}?api_key=$apikey";
+      }
+    });
+  }
+  String? imageUrl;
+  
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Container(
           width: double.infinity,
           height: 600,
-          decoration: const BoxDecoration(
+          decoration:  BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('lib/assets/images/moneyHeist.jpg'),
+                  image: NetworkImage(imageUrl ?? kMainImage),
                   fit: BoxFit.cover)),
         ),
         Positioned(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:netflix/core/constans.dart';
+import 'package:netflix/domain/apiendpoint.dart';
 import 'package:netflix/presentation/home/home_main_poster.dart';
 import 'package:netflix/presentation/home/home_scroll_direction.dart';
 import 'package:netflix/presentation/widgets/main_title_card.dart';
@@ -31,23 +32,23 @@ class HomeScreen extends StatelessWidget {
             child: Stack(
               children: [
                 ListView(
-                  children: const [
+                  children:  const [
                     HomeMainPoster(),
                     MainTitleCard(
                         uniqueCard: false,
-                        title: 'Released in the Past Year',
+                        title: 'New Releases',
                         url:
-                            'https://m.media-amazon.com/images/M/MV5BYWE3MDVkN2EtNjQ5MS00ZDQ4LTliNzYtMjc2YWMzMDEwMTA3XkEyXkFqcGdeQXVyMTEzMTI1Mjk3._V1_FMjpg_UX1000_.jpg'),
+                            ApiEndPoints.moviepopular),
                     MainTitleCard(
                         uniqueCard: false,
                         title: 'Trending Now',
                         url:
-                            'https://i.pinimg.com/474x/a4/23/0f/a4230f6c4e62f8a5928d7e48dfc0c823.jpg'),
+                            ApiEndPoints.trendingall),
                     MainTitleCard(
                       uniqueCard: true,
                       title: 'Top 10 TV Shows in India Today',
                       url:
-                          'https://m.media-amazon.com/images/I/41Mz8jDRq2L._AC_UF1000,1000_QL80_.jpg',
+                          ApiEndPoints.tvpopular,
                       height: 250,
                       width: 150,
                     ),
@@ -55,12 +56,12 @@ class HomeScreen extends StatelessWidget {
                         uniqueCard: false,
                         title: 'Tense Dramas',
                         url:
-                            'https://www.tallengestore.com/cdn/shop/products/Narcos-PabloEscobar-NetflixTVShowPosterFanArt_95ec6547-33b2-4e5c-b3a9-a43eaa59cc3c.jpg?v=1589271816'),
+                            ApiEndPoints.toprate),
                     MainTitleCard(
                         uniqueCard: false,
-                        title: 'South Indian Cinema',
+                        title: 'Discover',
                         url:
-                            'https://www.scrolldroll.com/wp-content/uploads/2022/10/jana-gana-mana-south-indian-movies-of-2022-on-netflix.jpg'),
+                            ApiEndPoints.tvtoprate),
                   ],
                 ),
                 scrollNotifier.value == true ? HomeScrollDirection() : kHeight

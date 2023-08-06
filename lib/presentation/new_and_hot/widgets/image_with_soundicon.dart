@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:netflix/core/colors/colors.dart';
 
 class ImageWithSoundIcon extends StatelessWidget {
-  final String image;
+  final String videoImage;
   const ImageWithSoundIcon({
-    required this.image,
+    required this.videoImage,
     super.key,
   });
 
@@ -13,8 +13,9 @@ class ImageWithSoundIcon extends StatelessWidget {
     return Stack(
       children: [
          Image(
+          fit: BoxFit.cover,
             image: NetworkImage(
-                image)),
+                videoImage)),
         Positioned(
           bottom: 10,
           right: 10,
