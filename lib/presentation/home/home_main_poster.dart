@@ -26,6 +26,7 @@ class _HomeMainPosterState extends State<HomeMainPoster> {
   initState() {
     super.initState();
     setImage();
+    
   }
 
   setImage() async {
@@ -40,19 +41,35 @@ class _HomeMainPosterState extends State<HomeMainPoster> {
     });
   }
   String? imageUrl;
-  
+  // 'https://image.tmdb.org/t/p/w500${weather.results[0].posterPath}?api_key=$apikey'
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Container(
-          width: double.infinity,
-          height: 600,
-          decoration:  BoxDecoration(
-              image: DecorationImage(
-                  image: NetworkImage(imageUrl ?? kMainImage),
-                  fit: BoxFit.cover)),
-        ),
+           width: double.infinity,
+            height: 600,
+          child: FutureBuilder(
+            future: apicall(ApiEndPoints.moviepopular),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return const Center(child: Text('Error: NetWork Issue'));
+                    } else if (!snapshot.hasData) {
+                      return const Center(child: Text('No data available'));
+                    } else {
+                      final weather = snapshot.data!;
+                      return Container(
+              width: double.infinity,
+              height: 600,
+              decoration:  BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage('https://image.tmdb.org/t/p/w500${weather.results[0].posterPath}?api_key=$apikey'),
+                      fit: BoxFit.cover)),
+            );
+  }}),
+    ),
         Positioned(
           bottom: 0,
           right: 0,
@@ -64,7 +81,9 @@ class _HomeMainPosterState extends State<HomeMainPoster> {
               children: [
                 const IconWithLabel(icon: Icons.add, title: 'MyList', vertical:10, horizontal: 0),
                 ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    
+                  },
                   icon: const Icon(
                     Icons.play_arrow,
                     size: 30,

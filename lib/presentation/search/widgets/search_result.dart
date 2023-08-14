@@ -4,21 +4,21 @@ import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/core/constans.dart';
 import 'package:netflix/infrastructure/api.dart';
 import 'package:netflix/infrastructure/base_client.dart';
-import 'package:netflix/model/movie_info.dart';
+
 import 'package:netflix/presentation/search/widgets/title.dart';
 
 import '../../../domain/apiendpoint.dart';
 
 String imageUrl =
     "https://media.istockphoto.com/id/1051788618/vector/movie-and-film-poster-template-design-modern-retro-vintage-style.jpg?s=612x612&w=0&k=20&c=CwMag6f5GwoHexEtMA5zrep78r4Q4yV0ZF8X0CUCIUs=";
-
+// 'https://image.tmdb.org/t/p/w500${movieInfo.posterPath}?api_key=$apikey'
 class SearchResultWidget extends StatelessWidget {
   final String apiQuery;
   const SearchResultWidget({super.key, required this.apiQuery});
 
   @override
   Widget build(BuildContext context) {
-    List imageList = [];
+  
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -28,57 +28,29 @@ class SearchResultWidget extends StatelessWidget {
             child: FutureBuilder(
                 future: apicall(ApiEndPoints.searchmovie + apiQuery),
                 builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return Center(
-                      child: Column(
-                        children: [
-                          CircularProgressIndicator(
-                            color: Colors.blue,
-                          ),
-                          Text('Please wait'),
-                        ],
-                      ),
-                    );
-                  }
-
-                  if (snapshot.data == null) {
-                    return const Center(
-                        child: Text(
-                      'No data found',
-                      style: TextStyle(fontSize: 20),
-                    ));
-                  }
-                  imageList =
-                      snapshot.data.results.map((MovieInfoModel movieInfo) {
-                    if (movieInfo.posterPath != null) {
-                      imageUrl =
-                          'https://image.tmdb.org/t/p/w500${movieInfo.posterPath}?api_key=$apikey';
-                    }
-                    return imageUrl;
-                  }).toList();
-
-                  if (imageList.isEmpty) {
-                    return const Center(
-                        child: Text(
-                      'No Movies Found',
-                      style: TextStyle(fontSize: 20),
-                    ));
-                  }
-
-                  return GridView.count(
+               if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return const Center(child: Text('Error: NetWork Issue'));
+                    } else if (!snapshot.hasData) {
+                      return const Center(child: Text('No data available'));
+                    } else {
+                      final weather = snapshot.data!;
+                      return GridView.count(
                       crossAxisCount: 3,
                       shrinkWrap: true,
                       mainAxisSpacing: 8,
                       crossAxisSpacing: 8,
                       childAspectRatio: 1 / 1.5, //first-width second-height
-                      children: List.generate(imageList.length, (index) {
+                      children: List.generate(weather.results.length, (index) {
                         return  MainCard(
+                          index: index,
                           url:
-                              imageList[index],
+                              ApiEndPoints.searchmovie + apiQuery,
                           uniqueCard: false,
                         );
                       }));
-                }))
+                }}))
       ],
     );
   }
@@ -109,15 +81,28 @@ class MainCard extends StatelessWidget {
                     width: 40,
                     height: 150,
                   ),
-                  Container(
-                    width: width,
-                    height: height,
-                    decoration: BoxDecoration(
-                        color: kWhite,
-                        borderRadius: BorderRadius.circular(7),
-                        image: DecorationImage(
-                            image: NetworkImage(url), fit: BoxFit.cover)),
-                  ),
+                  FutureBuilder(
+                    future: apicall(url),
+                    builder: (context, snapshot) { 
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return const Center(child: Text('Error: NetWork Issue'));
+                    } else if (!snapshot.hasData) {
+                      return const Center(child: Text('No data available'));
+                    } else {
+                      final weather = snapshot.data!;
+                      return Container(
+                      width: width,
+                      height: height,
+                      decoration: BoxDecoration(
+                          color: kWhite,
+                          borderRadius: BorderRadius.circular(7),
+                          image: DecorationImage(
+                          image: NetworkImage('https://image.tmdb.org/t/p/w500${weather.results[index].posterPath}?api_key=$apikey'), fit: BoxFit.cover)),
+                    );
+                    }
+  }),
                 ],
               ),
               Positioned(
@@ -134,14 +119,27 @@ class MainCard extends StatelessWidget {
                       ))),
             ],
           )
-        : Container(
-            width: width,
-            height: height,
-            decoration: BoxDecoration(
-                color: kWhite,
-                borderRadius: BorderRadius.circular(7),
-                image: DecorationImage(
-                    image: NetworkImage(url), fit: BoxFit.cover)),
-          );
+        :  FutureBuilder(
+                    future: apicall(url),
+                    builder: (context, snapshot) { 
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return const Center(child: Text('Error: NetWork Issue'));
+                    } else if (!snapshot.hasData) {
+                      return const Center(child: Text('No data available'));
+                    } else {
+                      final weather = snapshot.data!;
+                      return Container(
+                      width: width,
+                      height: height,
+                      decoration: BoxDecoration(
+                          color: kBlack,
+                          borderRadius: BorderRadius.circular(7),
+                          image: DecorationImage(
+                          image: NetworkImage('https://image.tmdb.org/t/p/w500${weather.results[index].posterPath}?api_key=$apikey'), fit: BoxFit.cover)),
+                    );
+                    }
+  });
   }
 }

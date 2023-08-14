@@ -15,7 +15,7 @@ class EveryonesWatching extends StatelessWidget {
      String imageUrl =
         'https://image.tmdb.org/t/p/w500${movieInfo.posterPath}?api_key=$apikey';
     return  Padding(
-      padding: EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Column(
         children: [
           TitleWithContent(
@@ -26,7 +26,7 @@ class EveryonesWatching extends StatelessWidget {
           kHeight50,
           ImageWithSoundIcon(
               videoImage: imageUrl),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconWithLabel(

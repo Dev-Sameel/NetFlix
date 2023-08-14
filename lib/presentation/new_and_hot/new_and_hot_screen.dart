@@ -55,54 +55,40 @@ class NewHotScreen extends StatelessWidget {
     return FutureBuilder(
         future: apicall(ApiEndPoints.upcoming),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            const Center(
-              child: Column(
-                children: [
-                  CircularProgressIndicator(
-                    color: Colors.blue,
-                  ),
-                  Text('Please wait'),
-                ],
-              ),
-            );
-          }
-
-          if (snapshot.data == null) {
-            return const Text('No data found');
-          }
-          return ListView.separated(
+          if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return const Center(child: Text('Error: NetWork Issue'));
+                    } else if (!snapshot.hasData) {
+                      return const Center(child: Text('No data available'));
+                    } else {
+                      final weather = snapshot.data!;
+                      return ListView.separated(
             separatorBuilder: (context, index) => kHeight50,
             itemBuilder: (BuildContext context, int index) {
-              return  ComingSoonWidget(movieInfo: snapshot.data.results[index]);
+              return  ComingSoonWidget(movieInfo: weather.results[index]);
             },
             itemCount: snapshot.data.results.length,
           );
-        });
+        }});
   }
 
   Widget _buildEveryonesWatching() {
     return  FutureBuilder(
-        future: apicall(ApiEndPoints.moviepopular),
+        future:  apicall(ApiEndPoints.moviepopular),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-             Center(
-              child: Column(
-                children: [
-                  CircularProgressIndicator(
-                    color: Colors.blue,
-                  ),
-                  Text('Please wait'),
-                ],
-              ),
-            );
-          }
-          if (snapshot.data == null) {
-            return const Text('No data found');
-          }
-          return ListView.builder(
-      itemBuilder: (context, index) =>  EveryonesWatching(movieInfo: snapshot.data.results[index]),
+         if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return const Center(child: Text('Error: NetWork Issue'));
+                    } else if (!snapshot.hasData) {
+                      return const Center(child: Text('No data available'));
+                    } else {
+                      final weather = snapshot.data!;
+                      return ListView.builder(
+      itemBuilder: (context, index) =>  EveryonesWatching(movieInfo: weather.results[index]),
      itemCount: snapshot.data.results.length,);
-});
+}
+  });
   }
 }

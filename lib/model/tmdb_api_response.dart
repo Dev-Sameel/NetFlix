@@ -22,13 +22,11 @@ class TMDBApiResponseModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-
     data['page'] = page;
     data['results'] =
         results.map((MovieInfoModel movieInfo) => movieInfo.toJson()).toList();
     data['total_pages'] = totalPages;
     data['total_results'] = totalResults;
-
     return data;
   }
 }

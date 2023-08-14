@@ -20,4 +20,4 @@ const String netflixIcon ='https://cdn4.iconfinder.com/data/icons/logos-and-bran
 
 //Image for showing if image not loaded
 const kMainImage =
-    "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/pFlaoHTZeyNkG83vxsAJiGzfSsa.jpg";
+    "https://forumstatic.oneplusmobile.com/opforum-gl/upload/image/front/thread/20220615/1187602/1089352407815028742/1089352407815028742.jpg";

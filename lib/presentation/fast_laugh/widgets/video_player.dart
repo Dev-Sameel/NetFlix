@@ -13,7 +13,7 @@ class FastLaughVideoPlayer extends StatefulWidget {
 
 class _FastLaughVideoPlayerState extends State<FastLaughVideoPlayer> {
   late final VideoPlayerController _videoPlayerController =
-      VideoPlayerController.network(widget.videoUrl);
+      VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl));
 
   @override
   void initState() {
@@ -37,6 +37,11 @@ class _FastLaughVideoPlayerState extends State<FastLaughVideoPlayer> {
                   onTap: () {
                     setState(() {
                       _videoPlayerController.pause();
+                    });
+                  },
+                  onDoubleTap: (){
+                    setState(() {
+                      _videoPlayerController.play();
                     });
                   },
                   child: VideoPlayer(_videoPlayerController)))

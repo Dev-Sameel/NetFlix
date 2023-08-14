@@ -18,7 +18,7 @@ class ApiEndPoints {
       '$kBaseUrl/movie/top_rated?api_key=$apikey&language=en-US&page=1';
 
   static const moviepopular =
-      '$kBaseUrl/movie/popular?api_key=$apikey&language=en-US&page=1';
+      '$kBaseUrl/discover/tv?include_adult=false&language=en-US&page=1&sort_by=vote_average.desc&vote_count.gte=200&api_key=$apikey';
 
   static const searchmovie = '$kBaseUrl/search/movie?api_key=$apikey&query=';
 

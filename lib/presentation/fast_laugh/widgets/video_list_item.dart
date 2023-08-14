@@ -74,10 +74,10 @@ class _VideoListItemState extends State<VideoListItem> {
                 children: [
                  CircleAvatar(radius: 25,backgroundImage: NetworkImage(imageList[widget.index]),),
                  kHeight,
-                 IconWithLabel(horizontal: 10,vertical: 10,icon: Icons.emoji_emotions, title: 'Lol'),
-                 IconWithLabel(horizontal: 10,vertical: 10,icon: Icons.add, title: 'My List'),
-                 IconWithLabel(horizontal: 10,vertical: 10,icon: Icons.share, title: 'Share'),
-                 IconWithLabel(horizontal: 10,vertical: 10,icon: Icons.play_arrow, title: 'Play'),
+                 const IconWithLabel(horizontal: 10,vertical: 10,icon: Icons.emoji_emotions, title: 'Lol'),
+                 const IconWithLabel(horizontal: 10,vertical: 10,icon: Icons.add, title: 'My List'),
+                 const IconWithLabel(horizontal: 10,vertical: 10,icon: Icons.share, title: 'Share'),
+                 const IconWithLabel(horizontal: 10,vertical: 10,icon: Icons.play_arrow, title: 'Play'),
                 ],
               )
                ],

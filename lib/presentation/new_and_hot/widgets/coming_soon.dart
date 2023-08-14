@@ -52,19 +52,19 @@ class ComingSoonWidget extends StatelessWidget {
                  Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
+                    SizedBox(
                       width: 175,
                   
                       child: Text(
                         movieInfo.originalTitle??'No Title Found',
-                        style: TextStyle(
+                        style: const TextStyle(
                           overflow: TextOverflow.ellipsis,
                             letterSpacing: -3,
                             fontSize: 38,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Row(
+                    const Row(
                       children: [
                         IconWithLabel(
                             iconSize: 25,
@@ -86,10 +86,10 @@ class ComingSoonWidget extends StatelessWidget {
                 ),
                 Text(
                   'Coming on ${fetchDay(movieInfo.releaseDate!)}',
-                  style: TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                 ),
                 kHeight20,
-                Row(
+                const Row(
                   children: [
                     Image(
                       image: AssetImage('lib/assets/images/netFlix.png'),
