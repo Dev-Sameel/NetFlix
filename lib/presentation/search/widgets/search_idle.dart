@@ -81,7 +81,7 @@ class TopSearchItem extends StatelessWidget {
            Expanded(
               child: Text(
             movieInfo.title ?? "No Movie Name Found",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           )),
           const Image(
             image: AssetImage('lib/assets/images/playButton.png'),

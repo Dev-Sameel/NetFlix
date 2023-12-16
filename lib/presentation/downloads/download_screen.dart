@@ -10,8 +10,8 @@ class DownloadScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final widgetList = [
-      SmartDownloads(),
-      Indroducing(),
+      const SmartDownloads(),
+      const Indroducing(),
       const SetUp(),
     ];
 

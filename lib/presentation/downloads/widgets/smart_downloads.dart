@@ -4,11 +4,11 @@ import 'package:netflix/core/constans.dart';
 
 // ignore: unused_element
 class SmartDownloads extends StatelessWidget {
-   SmartDownloads();
+   const SmartDownloads({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return   Row(
+    return   const Row(
       children: [
         
         Icon(

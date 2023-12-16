@@ -46,7 +46,7 @@ class _HomeMainPosterState extends State<HomeMainPoster> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
+        SizedBox(
            width: double.infinity,
             height: 600,
           child: FutureBuilder(
